@@ -27,6 +27,13 @@ export default class Stream extends EventEmitter {
 		this.stream.addEventListener('open', this.onOpen);
 		this.stream.addEventListener('close', this.onClose);
 		this.stream.addEventListener('message', this.onMessage);
+
+		setInterval(()=>{
+			console.log("Reconnecting...")
+			this.onClose();
+			this.stream.reconnect();
+			this.onOpen();
+		}, 10*60*1000)
 	}
 
 	@autobind
